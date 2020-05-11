@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   form: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },

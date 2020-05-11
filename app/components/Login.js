@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, Button, TextInput, TouchableOpacity} from 'react-native';
+import {Layout, Button, Input} from '@ui-kitten/components';
 
 import {getPermission} from '../services/location';
 
 import {login} from '../actions/session';
+import {formStyles} from '../theme/styles';
 
 export class Login extends Component {
   state = {};
@@ -13,7 +14,7 @@ export class Login extends Component {
     await getPermission();
   };
 
-  handleChange({name, value}) {
+  handleChange(name, value) {
     this.setState({[name]: value});
   }
 
@@ -23,38 +24,36 @@ export class Login extends Component {
 
   render() {
     return (
-      <View>
-        <View>
-          <TextInput
-            placeholder="Email"
-            value={this.state.email}
-            onChange={e => this.handleChange(e.target)}
-          />
-          <TextInput
-            placeholder="Password"
-            value={this.state.password}
-            onChange={e => this.handleChange(e.target)}
-          />
-          <Button
-            onPress={() => this.handleSubmit()}
-            title="Submit"
-          />
-        </View>
-        <View>
-          <TouchableOpacity icon="done" />
-        </View>
-      </View>
+      <Layout>
+        <Input
+          style={formStyles.textInput}
+          placeholder="Email"
+          name="email"
+          value={this.state.email}
+          autoCapitalize="none"
+          textContentType="emailAddress"
+          onChangeText={(text) => this.handleChange('email', text)}
+        />
+        <Input
+          style={formStyles.textInput}
+          placeholder="Password"
+          name="password"
+          autoCapitalize="none"
+          secureTextEntry={true}
+          textContentType="password"
+          value={this.state.password}
+          onChangeText={(text) => this.handleChange('password', text)}
+        />
+        <Button onPress={() => this.handleSubmit()}>Submit</Button>
+      </Layout>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   login,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

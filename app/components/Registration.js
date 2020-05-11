@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, View, Input} from '@ui-kitten/components';
+import {Button, Layout, Input, StyleService} from '@ui-kitten/components';
 
 import {register} from '../actions/session';
+import { formStyles } from "../theme/styles";
 
 export class Registration extends Component {
   state = {};
@@ -12,14 +13,14 @@ export class Registration extends Component {
   }
 
   handleSubmit() {
-    console.log(this.state);
     this.props.register({...this.state});
   }
 
   render() {
     return (
-      <View>
+      <Layout>
         <Input
+          style={formStyles.textInput}
           placeholder="First Name"
           name="firstName"
           value={this.state.firstName}
@@ -27,6 +28,7 @@ export class Registration extends Component {
           onChangeText={(text) => this.handleChange('firstName', text)}
         />
         <Input
+          style={formStyles.textInput}
           placeholder="Last Name"
           name="lastName"
           value={this.state.lastName}
@@ -34,6 +36,7 @@ export class Registration extends Component {
           onChangeText={(text) => this.handleChange('lastName', text)}
         />
         <Input
+          style={formStyles.textInput}
           placeholder="Phone"
           name="phoneNumber"
           value={this.state.phone}
@@ -41,16 +44,16 @@ export class Registration extends Component {
           onChangeText={(text) => this.handleChange('phoneNumber', text)}
         />
         <Input
+          style={formStyles.textInput}
           placeholder="Email"
           name="email"
           value={this.state.email}
           autoCapitalize="none"
-          autoCapitalization
-          autoCapitalization
           textContentType="emailAddress"
           onChangeText={(text) => this.handleChange('email', text)}
         />
         <Input
+          style={formStyles.textInput}
           placeholder="Password"
           name="password"
           value={this.state.password}
@@ -60,6 +63,7 @@ export class Registration extends Component {
           onChangeText={(text) => this.handleChange('password', text)}
         />
         <Input
+          style={formStyles.textInput}
           placeholder="Confirm Password"
           name="confirmPassword"
           value={this.state.password}
@@ -68,8 +72,8 @@ export class Registration extends Component {
           textContentType="password"
           onChangeText={(text) => this.handleChange('confirmPassword', text)}
         />
-        <Button onPress={() => this.handleSubmit()} title="Submit" />
-      </View>
+        <Button onPress={() => this.handleSubmit()}>Submit</Button>
+      </Layout>
     );
   }
 }

@@ -19,7 +19,7 @@ setBaseURL('http://192.168.1.147:5000');
 
 const RootHOC = (Component) => (props) => {
   return (
-    <ApplicationProvider {...eva} theme={eva.dark}>
+    <ApplicationProvider {...eva} theme={myTheme}>
       <Provider store={store}>
         <Component {...props} />
       </Provider>

@@ -1,22 +1,19 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Layout, Text} from '@ui-kitten/components';
 
 export class Delivery extends Component {
   render() {
     return (
-      <div>
-        
-      </div>
-    )
+      <Layout>
+        <Text>{this.props.order.customer.firstName}</Text>
+      </Layout>
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-  
-}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Delivery)
+export default connect(mapStateToProps, mapDispatchToProps)(Delivery);

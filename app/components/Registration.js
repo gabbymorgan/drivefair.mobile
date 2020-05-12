@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Button, Layout, Input, StyleService} from '@ui-kitten/components';
+import {Button, Layout, Input} from '@ui-kitten/components';
 
 import {register} from '../actions/session';
 import { formStyles } from "../theme/styles";

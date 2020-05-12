@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {View, Text} from 'react-native';
+import {Layout, Text} from '@ui-kitten/components';
+import { Navigation } from 'react-native-navigation';
 
 export class OrderHistoryScreen extends Component {
   render() {
     return (
-      <View>
+      <Layout style={styles.container}>
         <Text>OrderHistoryScreen</Text>
-      </View>
+      </Layout>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OrderHistoryScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistoryScreen);

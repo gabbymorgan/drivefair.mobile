@@ -14,8 +14,12 @@ import RouteScreen from '../DeliveryApp/app/screens/RouteScreen';
 import OrderHistoryScreen from '../DeliveryApp/app/screens/OrderHistoryScreen';
 import {setBaseURL} from '../DeliveryApp/app/services/http';
 import {myTheme} from './app/theme';
+import {loginRoot} from './app/navigation';
+Navigation.events().registerAppLaunchedListener(async () => {
+  Navigation.setRoot(loginRoot);
+});
 
-setBaseURL('http://192.168.1.147:5000');
+setBaseURL('http://192.168.1.97:5000');
 
 const RootHOC = (Component) => (props) => {
   return (
@@ -27,27 +31,11 @@ const RootHOC = (Component) => (props) => {
   );
 };
 
-Navigation.registerComponent('com.myApp.AuthScreen', () =>
-  RootHOC(AuthScreen),
-);
+Navigation.registerComponent('com.myApp.AuthScreen', () => RootHOC(AuthScreen));
 Navigation.registerComponent('com.myApp.RouteScreen', () =>
   RootHOC(RouteScreen),
 );
 Navigation.registerComponent('com.myApp.OrderHistoryScreen', () =>
   RootHOC(OrderHistoryScreen),
 );
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'com.myApp.AuthScreen',
-            },
-          },
-        ],
-      },
-    },
-  });
-});
+

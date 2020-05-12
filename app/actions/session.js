@@ -1,10 +1,9 @@
 import axios from 'axios';
 import types from './types';
 import {setBearerToken} from '../services/http';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const register = (attributes) => async (dispatch) => {
-  console.warn(attributes)
   dispatch({type: types.REGISTER});
   try {
     const response = await axios.post('/drivers/register', attributes);
@@ -50,7 +49,6 @@ export const loginWithToken = (token) => async (dispatch) => {
       payload: {...response.data, token},
     });
   } catch (error) {
-    await AsyncStorage.clear();
     dispatch({type: types.LOG_IN_FAIL, payload: {error}});
     dispatch(logout());
   }

@@ -8,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, {type, payload}) => {
   switch (type) {
-    case type.LOG_IN_SUCCESS:
+    case types.LOG_IN_SUCCESS:
       return {...state, status: payload.profile.status};
     case types.GET_ROUTE:
     case types.TOGGLE_STATUS:
@@ -17,8 +17,9 @@ export default (state = initialState, {type, payload}) => {
     case types.TOGGLE_STATUS_FAIL:
       return {...state, isLoading: false, error: payload.error};
     case types.GET_ROUTE_SUCCESS:
+      return {...state, isLoading: false, ...payload.route};
     case types.TOGGLE_STATUS_SUCCESS:
-      return {...state, isLoading: true, ...payload};
+      return {...state, isLoading: false, status: payload.status};
     default:
       return state;
   }

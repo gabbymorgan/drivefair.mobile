@@ -6,7 +6,6 @@ export const getRoute = () => async (dispatch) => {
   dispatch({type: types.GET_ROUTE});
   try {
     const response = await axios.get('/route/');
-    console.log(response);
     if (!response.data || response.data.error) {
       dispatch({type: types.GET_ROUTE_FAIL, payload: response.data});
     }

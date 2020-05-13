@@ -20,7 +20,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot(loginRoot);
 });
 
-setBaseURL('http://192.168.1.97:5000');
+setBaseURL('http://192.168.1.221:5000');
 
 const RootHOC = (Component) => (props) => {
   return (

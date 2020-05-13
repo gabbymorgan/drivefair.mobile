@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Button, ButtonGroup, Layout, Spinner} from '@ui-kitten/components';
 
-import {getPermission} from '../services/location';
 import {login, loginWithToken} from '../actions/session';
 import Login from '../components/Login';
 import Registration from '../components/Registration';
@@ -19,7 +18,6 @@ export class AuthScreen extends Component {
   };
 
   componentDidMount = async () => {
-    await getPermission();
     const authToken = await AsyncStorage.getItem('authToken');
     if (authToken) {
       this.props.loginWithToken(authToken);
@@ -28,7 +26,6 @@ export class AuthScreen extends Component {
 
   componentDidUpdate() {
     if (this.props.isLoggedIn) {
-      console.log('suh')
       Navigation.setRoot(mainRoot);
     }
   }

@@ -2,17 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Layout, Button, Input} from '@ui-kitten/components';
 
-import {getPermission} from '../services/location';
-
 import {login} from '../actions/session';
 import {formStyles} from '../theme/styles';
 
 export class Login extends Component {
   state = {};
 
-  componentDidMount = async () => {
-    await getPermission();
-  };
 
   handleChange(name, value) {
     this.setState({[name]: value});

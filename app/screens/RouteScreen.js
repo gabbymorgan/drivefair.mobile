@@ -5,30 +5,27 @@ import {Layout, Text} from '@ui-kitten/components';
 import Geolocation from '@react-native-community/geolocation';
 
 import {screenStyles} from '../theme/styles';
-import {getRoute} from '../actions/route';
+import {getRoute, setLocation} from '../actions/route';
 import StatusToggle from '../components/StatusToggle';
 import Order from '../components/Order';
+import {getLocation} from '../services/location';
 
+let realTimeDataInterval;
 class RouteScreen extends Component {
-  componentDidMount() {
-    console.log('mounted', this.props.isLoggedIn);
+  componentDidMount = async () => {
+    this.getRealTimeData();
+    realTimeDataInterval = setInterval(() => {
+      this.getRealTimeData();
+    }, 5000);
+  };
+
+  componentWillUnmount() {
+    clearInterval(realTimeDataInterval);
+  }
+
+  getRealTimeData() {
+    this.props.setLocation();
     this.props.getRoute();
-  }
-
-  componentDidUpdate(prevProps) {
-    console.log('updated', this.props.isLoggedIn);
-    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
-      this.props.getRoute();
-    }
-  }
-
-  getLocation() {
-    Geolocation.getCurrentPosition(
-      (success) => {
-        this.setState({...success.coords});
-      },
-      (error) => console.warn(error),
-    );
   }
 
   render() {
@@ -79,6 +76,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getRoute,
+  setLocation,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteScreen);

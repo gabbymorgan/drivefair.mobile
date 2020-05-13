@@ -10,6 +10,7 @@ const asyncActions = [
   'DELIVER_ORDER',
   'LOG_IN',
   'REGISTER',
+  "SET_LOCATION",
   'SEND_CONFIRMATION_EMAIL',
 ];
 const syncActions = ['LOG_OUT'];

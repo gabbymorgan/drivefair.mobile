@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
+import { StyleSheet } from "react-native";
 import {Layout, Text} from '@ui-kitten/components';
-import {Navigation} from 'react-native-navigation';
-import {screenStyles} from '../theme/styles';
+import {connect} from 'react-redux';
+import {screenStyles} from "../theme/styles"
 
-export class OrderHistoryScreen extends Component {
+export class MessagesScreen extends Component {
   render() {
     return (
       <Layout style={screenStyles.container}>
         <Layout style={screenStyles.title}>
-          <Text>Order History</Text>
+          <Text>Messages</Text>
         </Layout>
         <Layout style={screenStyles.body}></Layout>
       </Layout>
@@ -18,8 +17,10 @@ export class OrderHistoryScreen extends Component {
   }
 }
 
+
+
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderHistoryScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesScreen);

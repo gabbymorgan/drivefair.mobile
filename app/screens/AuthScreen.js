@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Button, ButtonGroup, Layout, Spinner} from '@ui-kitten/components';
-import AsyncStorage from '@react-native-community/async-storage';
-
 import {StyleSheet} from 'react-native';
+import {Navigation} from 'react-native-navigation';
+import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import {Button, ButtonGroup, Layout, Spinner} from '@ui-kitten/components';
+
 import {getPermission} from '../services/location';
 import {login, loginWithToken} from '../actions/session';
 import Login from '../components/Login';
 import Registration from '../components/Registration';
 import {mainRoot} from '../navigation';
-import {Navigation} from 'react-native-navigation';
+import {screenStyles} from "../theme/styles"
+
 
 export class AuthScreen extends Component {
   state = {
@@ -48,7 +50,7 @@ export class AuthScreen extends Component {
       );
     }
     return (
-      <Layout style={styles.container}>
+      <Layout style={screenStyles.container}>
         <Layout style={styles.form}>
           {this.state.screen === 'login' ? <Login /> : <Registration />}
         </Layout>
@@ -68,11 +70,6 @@ export class AuthScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
   form: {
     flex: 2,
     justifyContent: 'center',

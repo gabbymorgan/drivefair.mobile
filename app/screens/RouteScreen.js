@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet} from 'react-native';
-import {Layout} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import Geolocation from '@react-native-community/geolocation';
-import {createOpenLink} from 'react-native-open-maps';
+
+import {screenStyles} from '../theme/styles';
+import {getRoute} from '../actions/route';
+import StatusToggle from '../components/StatusToggle';
 
 class RouteScreen extends Component {
+  componentDidMount() {
+    this.props.getRoute();
+  }
+
   getLocation() {
     Geolocation.getCurrentPosition(
       (success) => {
@@ -15,31 +22,40 @@ class RouteScreen extends Component {
     );
   }
 
-  goToYosemite() {
-    createOpenLink({end: this.props.destination})();
-  }
-
   render() {
     return (
-      <Layout style={styles.container}>
-        {this.props.activeOrders.map((activeOrder) => {
-          return <Delivery order={activeOrder} />;
-        })}
+      <Layout style={screenStyles.container}>
+        <Layout style={screenStyles.title}>
+          <Text>Route</Text>
+          <StatusToggle />
+        </Layout>
+        <Layout style={screenStyles.body}>
+          {this.props.orders.map((activeOrder) => {
+            return <Delivery order={activeOrder} />;
+          })}
+        </Layout>
       </Layout>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  title: {
     flex: 1,
+    flexDirection: "row",
+    width: "100%"
+  },
+  body: {
+    flex: 9,
   },
 });
 
 const mapStateToProps = (state) => ({
-  activeOrders: state.orders.activeOrders,
+  orders: state.route.orders,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getRoute,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteScreen);

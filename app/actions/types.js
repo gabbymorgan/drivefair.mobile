@@ -3,7 +3,8 @@ const actionsObj = {};
 const asyncActions = [
   'GET_DRIVER_PROFILE',
   'NEW_DRIVER',
-  'GET_ORDERS',
+  'GET_ROUTE',
+  'TOGGLE_STATUS',
   'GET_ORDER_HISTORY',
   'REFUND_ORDER',
   'DELIVER_ORDER',

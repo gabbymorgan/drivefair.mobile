@@ -12,7 +12,8 @@ import store from '../DeliveryApp/app/reducers';
 import AuthScreen from '../DeliveryApp/app/screens/AuthScreen';
 import RouteScreen from '../DeliveryApp/app/screens/RouteScreen';
 import OrderHistoryScreen from '../DeliveryApp/app/screens/OrderHistoryScreen';
-import {setBaseURL} from '../DeliveryApp/app/services/http';
+import MessagesScreen from './app/screens/MessagesScreen';
+import {setBaseURL} from './app/services/http';
 import {myTheme} from './app/theme';
 import {loginRoot} from './app/navigation';
 Navigation.events().registerAppLaunchedListener(async () => {
@@ -35,7 +36,9 @@ Navigation.registerComponent('com.myApp.AuthScreen', () => RootHOC(AuthScreen));
 Navigation.registerComponent('com.myApp.RouteScreen', () =>
   RootHOC(RouteScreen),
 );
+Navigation.registerComponent('com.myApp.MessagesScreen', () =>
+  RootHOC(MessagesScreen),
+);
 Navigation.registerComponent('com.myApp.OrderHistoryScreen', () =>
   RootHOC(OrderHistoryScreen),
 );
-

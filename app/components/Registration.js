@@ -66,7 +66,7 @@ export class Registration extends Component {
           style={formStyles.textInput}
           placeholder="Confirm Password"
           name="confirmPassword"
-          value={this.state.password}
+          value={this.state.confirmPassword}
           autoCapitalize="none"
           secureTextEntry={true}
           textContentType="password"

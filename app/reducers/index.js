@@ -4,12 +4,12 @@ import thunk from 'redux-thunk';
 
 import session from './session';
 import settings from './settings';
-import orders from './orders';
+import route from './route';
 
 const rootReducer = combineReducers({
   session,
   settings,
-  orders,
+  route,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

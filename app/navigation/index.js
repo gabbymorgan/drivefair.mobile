@@ -64,6 +64,28 @@ export const mainRoot = {
               },
             },
           },
+        },        {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: 'com.myApp.MessagesScreen',
+                },
+              },
+            ],
+            options: {
+              bottomTab: {
+                icon: require("../assets/eva/fill/png/128/message-square.png")
+              },
+              topBar: {
+                visible: false,
+              },
+              bottomTabs: {
+                barStyle: 'black',
+                translucent: true,
+              },
+            },
+          },
         },
       ],
     },

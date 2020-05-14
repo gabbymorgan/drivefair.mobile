@@ -21,6 +21,7 @@ import {
   driverPickUpOrder,
   driverDeliverOrder,
   driverRejectOrder,
+  driverAcceptOrder,
 } from '../actions/route';
 import {myTheme} from '../theme';
 
@@ -33,6 +34,8 @@ export class Order extends Component {
     switch (this.props.order.disposition) {
       case 'EN_ROUTE':
         return this.props.driverDeliverOrder(orderId);
+      case 'ACCEPTED':
+        return this.props.driverAcceptOrder(orderId);
       default:
         return this.props.driverPickUpOrder(orderId);
     }
@@ -96,7 +99,10 @@ export class Order extends Component {
                     key={modification._id}
                     level="5"
                     style={styles.modification}>
-                    <Text category="p1">{modification.name}: {modification.options.map((option) => option.name)}</Text>
+                    <Text category="p1">
+                      {modification.name}:{' '}
+                      {modification.options.map((option) => option.name)}
+                    </Text>
                   </Layout>
                 ))}
               </Layout>
@@ -120,7 +126,7 @@ const OrderButtons = (props) => {
       return (
         <View style={styles.buttonGroup}>
           <Button style={styles.button} onPress={() => props.handleSubmit()}>
-            Pick Up
+            Accept
           </Button>
           <Button
             style={styles.button}
@@ -139,9 +145,11 @@ const OrderButtons = (props) => {
         </Button>
       );
     case 'READY':
-      <Button style={styles.button} onPress={() => props.handleSubmit()}>
-        Pick Up
-      </Button>;
+      return (
+        <Button status="success" onPress={() => props.handleSubmit()}>
+          Pick Up
+        </Button>
+      );
     default:
       return null;
   }
@@ -210,6 +218,7 @@ const mapDispatchToProps = {
   driverPickUpOrder,
   driverDeliverOrder,
   driverRejectOrder,
+  driverAcceptOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order);

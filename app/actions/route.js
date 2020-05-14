@@ -73,6 +73,23 @@ export const driverRejectOrder = (orderId) => async (dispatch) => {
 };
 
 
+export const driverAcceptOrder = (orderId) => async (dispatch) => {
+  dispatch({type: types.ACCEPT_ORDER});
+  try {
+    const response = await axios.post('/route/acceptOrder', {orderId});
+    if (!response.data || response.data.error) {
+      dispatch({type: types.ACCEPT_ORDER_FAIL, payload: response.data});
+    }
+    dispatch({
+      type: types.ACCEPT_ORDER_SUCCESS,
+      payload: {...response.data},
+    });
+  } catch (error) {
+    dispatch({type: types.ACCEPT_ORDER_FAIL, payload: {error}});
+  }
+};
+
+
 export const driverPickUpOrder = (orderId) => async (dispatch) => {
   dispatch({type: types.PICK_UP_ORDER});
   try {

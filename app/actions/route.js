@@ -35,12 +35,11 @@ export const toggleStatus = (status) => async (dispatch) => {
   }
 };
 
-export const setLocation = (location) => async (dispatch) => {
+export const setLocation = () => async (dispatch) => {
   dispatch({type: types.SET_LOCATION});
   try {
     const locationResponse = await getLocation();
     const {latitude, longitude} = locationResponse.coords;
-    console.log({latitude});
     const response = await axios.post('/drivers/setLocation', {
       latitude,
       longitude,
@@ -54,5 +53,54 @@ export const setLocation = (location) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({type: types.SET_LOCATION_FAIL, payload: {error}});
+  }
+};
+
+export const driverRejectOrder = (orderId) => async (dispatch) => {
+  dispatch({type: types.REJECT_ORDER});
+  try {
+    const response = await axios.post('/route/rejectOrder', {orderId});
+    if (!response.data || response.data.error) {
+      dispatch({type: types.REJECT_ORDER_FAIL, payload: response.data});
+    }
+    dispatch({
+      type: types.REJECT_ORDER_SUCCESS,
+      payload: {...response.data},
+    });
+  } catch (error) {
+    dispatch({type: types.REJECT_ORDER_FAIL, payload: {error}});
+  }
+};
+
+
+export const driverPickUpOrder = (orderId) => async (dispatch) => {
+  dispatch({type: types.PICK_UP_ORDER});
+  try {
+    const response = await axios.post('/route/pickUpOrder', {orderId});
+    if (!response.data || response.data.error) {
+      dispatch({type: types.PICK_UP_ORDER_FAIL, payload: response.data});
+    }
+    dispatch({
+      type: types.PICK_UP_ORDER_SUCCESS,
+      payload: {...response.data},
+    });
+  } catch (error) {
+    dispatch({type: types.PICK_UP_ORDER_FAIL, payload: {error}});
+  }
+};
+
+export const driverDeliverOrder = (orderId) => async (dispatch) => {
+  dispatch({type: types.DELIVER_ORDER});
+  try {
+    const response = await axios.post('/route/DeliverOrder', {orderId});
+    if (!response.data || response.data.error) {
+      dispatch({type: types.DELIVER_ORDER_FAIL, payload: response.data});
+    }
+    dispatch({
+      type: types.DELIVER_ORDER_SUCCESS,
+      payload: {...response.data},
+    });
+  } catch (error) {
+    dispatch({type: types.DELIVER_ORDER_FAIL, payload: {error}});
   }
 };

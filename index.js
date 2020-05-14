@@ -24,16 +24,18 @@ Navigation.events().registerAppLaunchedListener(async () => {
 
 setBaseURL('http://192.168.1.221:5000');
 
-const RootHOC = (Component) => (props) => {
-  return (
+const RootHOC = (Component) => (props) => (
+  <React.Fragment>
+    <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={myTheme}>
-      <IconRegistry icons={EvaIconsPack} />
       <Provider store={store}>
         <Component {...props} />
       </Provider>
     </ApplicationProvider>
-  );
-};
+  </React.Fragment>
+);
+
+console.disableYellowBox = true;
 
 Navigation.registerComponent('com.myApp.AuthScreen', () => RootHOC(AuthScreen));
 Navigation.registerComponent('com.myApp.RouteScreen', () =>

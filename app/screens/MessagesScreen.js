@@ -8,9 +8,6 @@ export class MessagesScreen extends Component {
   render() {
     return (
       <Layout style={screenStyles.container}>
-        <Layout style={screenStyles.title}>
-          <Text>Messages</Text>
-        </Layout>
         <Layout style={screenStyles.body}></Layout>
       </Layout>
     );

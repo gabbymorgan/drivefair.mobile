@@ -9,9 +9,6 @@ export class OrderHistoryScreen extends Component {
   render() {
     return (
       <Layout style={screenStyles.container}>
-        <Layout style={screenStyles.title}>
-          <Text>Order History</Text>
-        </Layout>
         <Layout style={screenStyles.body}></Layout>
       </Layout>
     );

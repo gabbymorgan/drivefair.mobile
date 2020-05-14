@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {Layout, Text} from '@ui-kitten/components';
-import Geolocation from '@react-native-community/geolocation';
 
 import {screenStyles} from '../theme/styles';
 import {getRoute, setLocation} from '../actions/route';
-import StatusToggle from '../components/StatusToggle';
 import Order from '../components/Order';
-import {getLocation} from '../services/location';
+import {NavigateIcon} from '../theme/icons';
 
 let realTimeDataInterval;
+const windowWidth = Dimensions.get('window').width;
 class RouteScreen extends Component {
   componentDidMount = async () => {
     this.getRealTimeData();
@@ -34,23 +33,30 @@ class RouteScreen extends Component {
     return (
       <Layout style={screenStyles.container}>
         <Layout style={screenStyles.title}>
-          <Text>Route</Text>
-        </Layout>
-        <Layout>
-          <StatusToggle />
-        </Layout>
-        <Layout>
           <Text>{businessName}</Text>
-        </Layout>
-        <Layout>
           <Text>
             {street} {unit ? '#' + unit : null}
           </Text>
+          <Text>
+            {city}, {state} {zip}
+          </Text>
+          <NavigateIcon />
         </Layout>
         <Layout style={screenStyles.body}>
-          {this.props.orders.map((order) => {
-            return <Order key={order._id} order={order} />;
-          })}
+          <Layout style={styles.carouselContainer}>
+            <ScrollView
+              style={styles.carousel}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled={true}
+              decelerationRate={0}
+              snapToInterval={windowWidth}>
+              {this.props.orders.map((order) => {
+                return <Order key={order._id} order={order} />;
+              })}
+            </ScrollView>
+          </Layout>
+          <Layout style={styles.bottomContainer}></Layout>
         </Layout>
       </Layout>
     );
@@ -58,13 +64,15 @@ class RouteScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '100%',
+  carouselContainer: {
+    flex: 5,
   },
-  body: {
-    flex: 9,
+  bottomContainer: {
+    flex: 1,
+  },
+  carousel: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 });
 

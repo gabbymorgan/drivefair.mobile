@@ -10,9 +10,7 @@ import {connect} from 'react-redux';
 import {
   Layout,
   Text,
-  Button,
-  useTheme,
-  ButtonGroup,
+  Button
 } from '@ui-kitten/components';
 
 import {NavigateIcon, CloseCircleIcon} from '../theme/icons';

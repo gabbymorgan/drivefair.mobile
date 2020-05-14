@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet} from 'react-native';
-import {Layout, Text} from '@ui-kitten/components';
-import Geolocation from '@react-native-community/geolocation';
+import {
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {Layout, Text, Spinner} from '@ui-kitten/components';
 
 import {screenStyles} from '../theme/styles';
 import {getRoute, setLocation} from '../actions/route';
-import StatusToggle from '../components/StatusToggle';
 import Order from '../components/Order';
-import {getLocation} from '../services/location';
+import {NavigateIcon} from '../theme/icons';
+import {navigateToAddress} from '../services/location';
 
 let realTimeDataInterval;
+const windowWidth = Dimensions.get('window').width;
 class RouteScreen extends Component {
   componentDidMount = async () => {
     this.getRealTimeData();
     realTimeDataInterval = setInterval(() => {
       this.getRealTimeData();
-    }, 5000);
+    },30000);
   };
 
   componentWillUnmount() {
@@ -31,26 +36,52 @@ class RouteScreen extends Component {
   render() {
     const {businessName, address} = this.props.vendor;
     const {street, unit, city, state, zip} = address ? address : {};
+    if (this.props.isLoading && !this.props.orders.length) {
+      return (
+        <Layout style={screenStyles.container}>
+          <Spinner size="large" />
+        </Layout>
+      );
+    }
+    if (!this.props.orders.length) {
+      return (
+        <Layout style={screenStyles.container}>
+          <Text>Nothing yet!</Text>
+        </Layout>
+      );
+    }
     return (
       <Layout style={screenStyles.container}>
-        <Layout style={screenStyles.title}>
-          <Text>Route</Text>
-        </Layout>
-        <Layout>
-          <StatusToggle />
-        </Layout>
-        <Layout>
+        <Layout
+          style={styles.vendorInfo}
+          onPress={() => navigateToAddress({street, unit, city, state, zip})}>
           <Text>{businessName}</Text>
-        </Layout>
-        <Layout>
           <Text>
             {street} {unit ? '#' + unit : null}
           </Text>
+          <Text>
+            {city}, {state} {zip}
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigateToAddress({street, unit, city, state, zip})}
+            style={styles.icon}>
+            <NavigateIcon color="white" />
+          </TouchableOpacity>
         </Layout>
         <Layout style={screenStyles.body}>
-          {this.props.orders.map((order) => {
-            return <Order key={order._id} order={order} />;
-          })}
+          <Layout style={styles.carouselContainer}>
+            <ScrollView
+              style={styles.carousel}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled={true}
+              decelerationRate={0}
+              snapToInterval={windowWidth}>
+              {this.props.orders.map((order) => {
+                return <Order key={order._id} order={order} />;
+              })}
+            </ScrollView>
+          </Layout>
         </Layout>
       </Layout>
     );
@@ -58,13 +89,19 @@ class RouteScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
+  vendorInfo: {
     flex: 1,
-    flexDirection: 'row',
-    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  body: {
-    flex: 9,
+  carouselContainer: {
+    flex: 6,
+    marginBottom: 10,
+  },
+  carousel: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 });
 
@@ -72,6 +109,7 @@ const mapStateToProps = (state) => ({
   vendor: state.route.vendor,
   orders: state.route.orders,
   isLoggedIn: state.session.isLoggedIn,
+  isLoading: state.route.isLoading,
 });
 
 const mapDispatchToProps = {

@@ -7,11 +7,13 @@ const asyncActions = [
   'TOGGLE_STATUS',
   'GET_ORDER_HISTORY',
   'REFUND_ORDER',
-  'DELIVER_ORDER',
   'LOG_IN',
   'REGISTER',
   "SET_LOCATION",
   'SEND_CONFIRMATION_EMAIL',
+  'PICK_UP_ORDER',
+  'REJECT_ORDER',
+  'DELIVER_ORDER'
 ];
 const syncActions = ['LOG_OUT'];
 

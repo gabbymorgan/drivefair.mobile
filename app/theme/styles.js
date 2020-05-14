@@ -11,11 +11,17 @@ export const screenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   title: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   body: {
     flex: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30
   },
 });

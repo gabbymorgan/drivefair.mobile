@@ -1,5 +1,6 @@
 import {PermissionsAndroid} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
+import {createOpenLink} from 'react-native-open-maps';
 
 export const getLocation = async () => {
   let location;
@@ -30,4 +31,11 @@ export const getPermission = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const navigateToAddress = async ({street, unit, city, state, zip}) => {
+  const addressString = `${street} ${
+    unit ? '#' + unit : ''
+  } ${city}, ${state} ${zip}`;
+  createOpenLink({end: addressString})();
 };

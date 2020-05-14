@@ -1,4 +1,6 @@
 import React from 'react';
+import {myTheme} from '../theme';
+import store from '../reducers/index';
 
 export const loginRoot = {
   root: {
@@ -9,7 +11,7 @@ export const loginRoot = {
             name: 'com.myApp.AuthScreen',
             options: {
               topBar: {
-                visible: false,
+                visible: 'false',
               },
             },
           },
@@ -34,10 +36,26 @@ export const mainRoot = {
             ],
             options: {
               bottomTab: {
-                icon: require("../assets/eva/fill/png/128/car.png")
+                icon: require('../assets/eva/fill/png/128/car.png'),
               },
               topBar: {
-                visible: false,
+                title: {
+                  text: 'Deliveries',
+                  color: 'white',
+                },
+                background: {
+                  color: myTheme['color-basic-800'],
+                  translucent: true,
+                },
+                rightButtons: [
+                  {
+                    id: 'STATUS_TOGGLE',
+                    component: {
+                      name: 'com.myApp.StatusToggle',
+                      text: 'suh',
+                    },
+                  },
+                ],
               },
             },
           },
@@ -53,10 +71,26 @@ export const mainRoot = {
             ],
             options: {
               bottomTab: {
-                icon: require("../assets/eva/fill/png/128/folder.png")
+                icon: require('../assets/eva/fill/png/128/folder.png'),
               },
               topBar: {
-                visible: false,
+                title: {
+                  text: 'Order History',
+                  color: 'white',
+                },
+                background: {
+                  color: myTheme['color-basic-800'],
+                  translucent: true,
+                },
+                rightButtons: [
+                  {
+                    id: 'STATUS_TOGGLE',
+                    component: {
+                      name: 'com.myApp.StatusToggle',
+                      text: 'suh',
+                    },
+                  },
+                ],
               },
               bottomTabs: {
                 barStyle: 'black',
@@ -64,7 +98,8 @@ export const mainRoot = {
               },
             },
           },
-        },        {
+        },
+        {
           stack: {
             children: [
               {
@@ -75,10 +110,26 @@ export const mainRoot = {
             ],
             options: {
               bottomTab: {
-                icon: require("../assets/eva/fill/png/128/message-square.png")
+                icon: require('../assets/eva/fill/png/128/message-square.png'),
               },
               topBar: {
-                visible: false,
+                title: {
+                  text: 'Messages',
+                  color: 'white',
+                },
+                background: {
+                  color: myTheme['color-basic-800'],
+                  translucent: true,
+                },
+                rightButtons: [
+                  {
+                    id: 'STATUS_TOGGLE',
+                    component: {
+                      name: 'com.myApp.StatusToggle',
+                      text: 'suh',
+                    },
+                  },
+                ],
               },
               bottomTabs: {
                 barStyle: 'black',

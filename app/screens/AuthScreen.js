@@ -3,14 +3,19 @@ import {StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Button, ButtonGroup, Layout, Spinner} from '@ui-kitten/components';
+import {
+  Button,
+  ButtonGroup,
+  Layout,
+  Spinner,
+  Text,
+} from '@ui-kitten/components';
 
 import {login, loginWithToken} from '../actions/session';
 import Login from '../components/Login';
 import Registration from '../components/Registration';
 import {mainRoot} from '../navigation';
-import {screenStyles} from "../theme/styles"
-
+import {screenStyles} from '../theme/styles';
 
 export class AuthScreen extends Component {
   state = {
@@ -41,8 +46,11 @@ export class AuthScreen extends Component {
   render() {
     if (this.props.isLoading) {
       return (
-        <Layout style={styles.container}>
-          <Spinner />
+        <Layout style={screenStyles.container}>
+          <Layout style={screenStyles.container}>
+            <Text style={styles.text}>Logging in...</Text>
+            <Spinner size="giant" />
+          </Layout>
         </Layout>
       );
     }
@@ -76,6 +84,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    margin: 30,
   },
 });
 

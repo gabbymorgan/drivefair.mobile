@@ -7,6 +7,7 @@ import {Navigation} from 'react-native-navigation';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {Provider} from 'react-redux';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
 
 import store from '../DeliveryApp/app/reducers';
 import AuthScreen from '../DeliveryApp/app/screens/AuthScreen';
@@ -17,7 +18,8 @@ import {setBaseURL} from './app/services/http';
 import {myTheme} from './app/theme';
 import {loginRoot} from './app/navigation';
 import StatusToggle from './app/components/StatusToggle';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
+
+
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot(loginRoot);
 });

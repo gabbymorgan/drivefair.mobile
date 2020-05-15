@@ -29,6 +29,7 @@ export default (state = initialState, {type, payload}) => {
     case types.PICK_UP_ORDER_SUCCESS:
     case types.DELIVER_ORDER_SUCCESS:
     case types.REJECT_ORDER_SUCCESS:
+    case types.ACCEPT_ORDER_SUCCESS:
       return {...state, isLoading: false, ...payload.route};
     case types.TOGGLE_STATUS_SUCCESS:
       return {...state, statusIsLoading: false, status: payload.status};

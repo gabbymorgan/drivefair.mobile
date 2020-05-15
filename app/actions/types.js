@@ -13,7 +13,8 @@ const asyncActions = [
   'SEND_CONFIRMATION_EMAIL',
   'PICK_UP_ORDER',
   'REJECT_ORDER',
-  'DELIVER_ORDER'
+  'DELIVER_ORDER',
+  'ACCEPT_ORDER',
 ];
 const syncActions = ['LOG_OUT'];
 

@@ -7,11 +7,8 @@ import {
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {
-  Layout,
-  Text,
-  Button
-} from '@ui-kitten/components';
+import {Layout, Text, Button} from '@ui-kitten/components';
+import moment from "moment";
 
 import {NavigateIcon, CloseCircleIcon} from '../theme/icons';
 import {navigateToAddress} from '../services/location';
@@ -25,30 +22,35 @@ import {myTheme} from '../theme';
 
 export class Order extends Component {
   state = {
-    pressBegin: null,
+    pressingCancelSince: null,
+    pressing: false,
   };
   handleSubmit() {
     const orderId = this.props.order._id;
     switch (this.props.order.disposition) {
       case 'EN_ROUTE':
         return this.props.driverDeliverOrder(orderId);
-      case 'ACCEPTED':
+      case 'ACCEPTED_BY_VENDOR':
         return this.props.driverAcceptOrder(orderId);
-      default:
+      case 'READY':
         return this.props.driverPickUpOrder(orderId);
+      default:
+        return;
     }
   }
 
   rejectPressIn() {
     this.setState({
-      pressBegin: Date.now(),
+      pressingCancelSince: Date.now(),
     });
   }
   rejectPressOut() {
-    console.log(Date.now(), this.state.pressBegin);
-    if (Date.now() > this.state.pressBegin + 3000) {
+    if (Date.now() > this.state.pressingCancelSince + 3000) {
       this.props.driverRejectOrder(this.props.order._id);
     }
+    this.setState({
+      pressingCancelSince: null,
+    });
   }
 
   render() {
@@ -120,7 +122,7 @@ export class Order extends Component {
 
 const OrderButtons = (props) => {
   switch (props.order.disposition) {
-    case 'ACCEPTED':
+    case 'ACCEPTED_BY_VENDOR':
       return (
         <View style={styles.buttonGroup}>
           <Button style={styles.button} onPress={() => props.handleSubmit()}>
@@ -136,10 +138,10 @@ const OrderButtons = (props) => {
           </Button>
         </View>
       );
-    case 'EN_ROUTE':
+    case 'ACCEPTED_BY_DRIVER':
       return (
-        <Button status="success" onPress={() => props.handleSubmit()}>
-          Deliver
+        <Button status="info">
+          Estimated ready time: {moment(props.order.estimatedReadyTime).format("hh:mm A")}
         </Button>
       );
     case 'READY':
@@ -148,6 +150,13 @@ const OrderButtons = (props) => {
           Pick Up
         </Button>
       );
+    case 'EN_ROUTE':
+      return (
+        <Button status="success" onPress={() => props.handleSubmit()}>
+          Deliver by:{moment(props.order.estimatedDeliveryTime  ).format("hh:mm A")}
+        </Button>
+      );
+
     default:
       return null;
   }

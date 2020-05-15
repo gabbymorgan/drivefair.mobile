@@ -61,7 +61,9 @@ export class AuthScreen extends Component {
         </Layout>
         <Layout style={styles.selection}>
           <ButtonGroup>
-            <Button onPress={() => this.setState({screen: 'login'})}>
+            <Button
+              selected={this.state.screen === 'login'}
+              onPress={() => this.setState({screen: 'login'})}>
               Login
             </Button>
             <Button onPress={() => this.setState({screen: 'register'})}>

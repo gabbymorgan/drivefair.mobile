@@ -19,9 +19,8 @@ const windowWidth = Dimensions.get('window').width;
 class RouteScreen extends Component {
   componentDidMount = async () => {
     this.getRealTimeData();
-    realTimeDataInterval = setInterval(() => {
-      this.getRealTimeData();
-    },30000);
+    realTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
+
   };
 
   componentWillUnmount() {

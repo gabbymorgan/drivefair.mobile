@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Layout, Text, Button} from '@ui-kitten/components';
-import moment from "moment";
+import moment from 'moment';
 
 import {NavigateIcon, CloseCircleIcon} from '../theme/icons';
 import {navigateToAddress} from '../services/location';
@@ -141,7 +141,8 @@ const OrderButtons = (props) => {
     case 'ACCEPTED_BY_DRIVER':
       return (
         <Button status="info">
-          Estimated ready time: {moment(props.order.estimatedReadyTime).format("hh:mm A")}
+          Estimated ready time:{' '}
+          {moment(props.order.estimatedReadyTime).format('hh:mm A')}
         </Button>
       );
     case 'READY':
@@ -151,9 +152,14 @@ const OrderButtons = (props) => {
         </Button>
       );
     case 'EN_ROUTE':
+      const {estimatedDeliveryTime} = props.order;
       return (
         <Button status="success" onPress={() => props.handleSubmit()}>
-          Deliver by:{moment(props.order.estimatedDeliveryTime  ).format("hh:mm A")}
+          Deliver
+          {estimatedDeliveryTime
+            ? ' by: ' + 
+            moment(estimatedDeliveryTime).format('hh:mm A')
+            : ''}
         </Button>
       );
 

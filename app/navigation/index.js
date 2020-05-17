@@ -142,3 +142,21 @@ export const mainRoot = {
     },
   },
 };
+
+export const modalStack = {
+  stack: {
+    children: [
+      {
+        component: {
+          id: "toast",
+          name: 'com.myApp.Toast',
+          options: {
+            topBar: {
+              visible: false,
+            },
+          },
+        },
+      },
+    ],
+  },
+};

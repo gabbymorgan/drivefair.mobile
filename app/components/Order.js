@@ -125,11 +125,11 @@ const OrderButtons = (props) => {
     case 'ACCEPTED_BY_VENDOR':
       return (
         <View style={styles.buttonGroup}>
-          <Button style={styles.button} onPress={() => props.handleSubmit()}>
+          <Button style={styles.buttonDouble} onPress={() => props.handleSubmit()}>
             Accept
           </Button>
           <Button
-            style={styles.button}
+            style={styles.buttonDouble}
             status="danger"
             accessoryLeft={CloseCircleIcon}
             onPressIn={() => props.rejectPressIn()}
@@ -140,25 +140,30 @@ const OrderButtons = (props) => {
       );
     case 'ACCEPTED_BY_DRIVER':
       return (
-        <Button status="info">
+        <Button style={styles.buttonSingle} status="info">
           Estimated ready time:{' '}
           {moment(props.order.estimatedReadyTime).format('hh:mm A')}
         </Button>
       );
     case 'READY':
       return (
-        <Button status="success" onPress={() => props.handleSubmit()}>
+        <Button
+          style={styles.buttonSingle}
+          status="success"
+          onPress={() => props.handleSubmit()}>
           Pick Up
         </Button>
       );
     case 'EN_ROUTE':
       const {estimatedDeliveryTime} = props.order;
       return (
-        <Button status="success" onPress={() => props.handleSubmit()}>
+        <Button
+          style={styles.buttonSingle}
+          status="success"
+          onPress={() => props.handleSubmit()}>
           Deliver
           {estimatedDeliveryTime
-            ? ' by: ' + 
-            moment(estimatedDeliveryTime).format('hh:mm A')
+            ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mm A')
             : ''}
         </Button>
       );
@@ -172,8 +177,8 @@ const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: windowWidth * 0.05,
     padding: 10,
+    margin: windowWidth * 0.05,
     width: windowWidth * 0.9,
     borderRadius: 10,
   },
@@ -187,8 +192,8 @@ const styles = StyleSheet.create({
   customerTitle: {borderTopLeftRadius: 10, borderTopRightRadius: 10},
   orderItemList: {
     flex: 2,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    // borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
   },
   orderItem: {
     flexDirection: 'column',
@@ -219,9 +224,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  button: {
+  buttonDouble: {
     width: '40%',
     marginHorizontal: '5%',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+  buttonSingle: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
 });
 

@@ -11,7 +11,7 @@ const Toast = function (props) {
   return (
     <View style={styles.root}>
       <View style={styles.toast}>
-        <Text style={styles.text}>This a very important message!</Text>
+        <Text style={styles.text}>{props.message.notification.body}</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => dismissOverlay()}>
@@ -61,7 +61,9 @@ Toast.options = {
   },
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  message: state.messages.currentMessage
+});
 
 const mapDispatchToProps = {};
 

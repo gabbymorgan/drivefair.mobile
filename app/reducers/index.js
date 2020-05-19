@@ -5,11 +5,13 @@ import thunk from 'redux-thunk';
 import session from './session';
 import settings from './settings';
 import route from './route';
+import messages from './messages';
 
 const rootReducer = combineReducers({
   session,
   settings,
   route,
+  messages
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

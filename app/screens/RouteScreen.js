@@ -10,23 +10,21 @@ import {Layout, Text, Spinner} from '@ui-kitten/components';
 
 import {screenStyles} from '../theme/styles';
 import {getRoute, setLocation} from '../actions/route';
-import Order from '../components/Order';
+import Order from '../components/organisms/Order';
 import {NavigateIcon} from '../theme/icons';
 import {navigateToAddress} from '../services/location';
 
-let realTimeDataInterval;
+// let realTimeDataInterval;
 const windowWidth = Dimensions.get('window').width;
 class RouteScreen extends Component {
   componentDidMount = async () => {
     this.getRealTimeData();
-    realTimeDataInterval = setInterval(() => {
-      this.getRealTimeData();
-    },30000);
+    // realTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
   };
 
-  componentWillUnmount() {
-    clearInterval(realTimeDataInterval);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(realTimeDataInterval);
+  // }
 
   getRealTimeData() {
     this.props.setLocation();
@@ -52,22 +50,24 @@ class RouteScreen extends Component {
     }
     return (
       <Layout style={screenStyles.container}>
-        <Layout
+        <TouchableOpacity
           style={styles.vendorInfo}
           onPress={() => navigateToAddress({street, unit, city, state, zip})}>
-          <Text>{businessName}</Text>
-          <Text>
-            {street} {unit ? '#' + unit : null}
-          </Text>
-          <Text>
-            {city}, {state} {zip}
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigateToAddress({street, unit, city, state, zip})}
-            style={styles.icon}>
-            <NavigateIcon color="white" />
-          </TouchableOpacity>
-        </Layout>
+          <Layout style={styles.address}>
+            <Text category="h5" style={styles.vendorInfoText}>
+              {businessName}
+            </Text>
+            <Text category="s2" style={styles.vendorInfoText}>
+              {street} {unit ? '#' + unit : null}
+            </Text>
+            <Text category="s2" style={styles.vendorInfoText}>
+              {city}, {state} {zip}
+            </Text>
+          </Layout>
+          <Layout style={styles.navIcon}>
+            <NavigateIcon />
+          </Layout>
+        </TouchableOpacity>
         <Layout style={screenStyles.body}>
           <Layout style={styles.carouselContainer}>
             <ScrollView
@@ -91,13 +91,22 @@ class RouteScreen extends Component {
 const styles = StyleSheet.create({
   vendorInfo: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    flexDirection: 'row',
+    flexWrap: "nowrap",
+    alignItems: "center",
+    padding: 10
+  },
+  vendorInfoText: {
+    textAlign: 'center',
   },
   carouselContainer: {
     flex: 6,
-    marginBottom: 10,
+  },
+  address: {
+    maxWidth: '80%',
+  },
+  navIcon: {
+    maxWidth: "10%"
   },
   carousel: {
     display: 'flex',

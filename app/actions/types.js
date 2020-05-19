@@ -9,11 +9,13 @@ const asyncActions = [
   'REFUND_ORDER',
   'LOG_IN',
   'REGISTER',
-  "SET_LOCATION",
+  'SET_LOCATION',
   'SEND_CONFIRMATION_EMAIL',
   'PICK_UP_ORDER',
   'REJECT_ORDER',
-  'DELIVER_ORDER'
+  'DELIVER_ORDER',
+  'ACCEPT_ORDER',
+  'RECEIVE_PUSH_NOTIFICATION',
 ];
 const syncActions = ['LOG_OUT'];
 

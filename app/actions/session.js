@@ -2,6 +2,8 @@ import axios from 'axios';
 import types from './types';
 import {setBearerToken} from '../services/http';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Navigation } from 'react-native-navigation';
+import { loginRoot } from '../navigation';
 
 export const register = (attributes) => async (dispatch) => {
   dispatch({type: types.REGISTER});
@@ -71,4 +73,5 @@ export const logout = () => async (dispatch) => {
   setBearerToken('');
   await AsyncStorage.clear();
   dispatch({type: types.LOG_OUT});
+  Navigation.setRoot(loginRoot);
 };

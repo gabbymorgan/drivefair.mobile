@@ -142,3 +142,21 @@ export const mainRoot = {
     },
   },
 };
+
+export const modalStack = {
+  stack: {
+    children: [
+      {
+        component: {
+          id: "modal",
+          name: 'com.myApp.Modal',
+          options: {
+            topBar: {
+              visible: false,
+            },
+          },
+        },
+      },
+    ],
+  },
+};

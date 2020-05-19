@@ -7,47 +7,50 @@ import {
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {
-  Layout,
-  Text,
-  Button,
-  useTheme,
-  ButtonGroup,
-} from '@ui-kitten/components';
+import {Layout, Text, Button} from '@ui-kitten/components';
+import moment from 'moment';
 
-import {NavigateIcon, CloseCircleIcon} from '../theme/icons';
-import {navigateToAddress} from '../services/location';
+import {NavigateIcon, CloseCircleIcon} from '../../theme/icons';
+import {navigateToAddress} from '../../services/location';
 import {
   driverPickUpOrder,
   driverDeliverOrder,
   driverRejectOrder,
-} from '../actions/route';
-import {myTheme} from '../theme';
+  driverAcceptOrder,
+} from '../../actions/route';
+import {myTheme} from '../../theme';
 
 export class Order extends Component {
   state = {
-    pressBegin: null,
+    pressingCancelSince: null,
+    pressing: false,
   };
   handleSubmit() {
     const orderId = this.props.order._id;
     switch (this.props.order.disposition) {
       case 'EN_ROUTE':
         return this.props.driverDeliverOrder(orderId);
-      default:
+      case 'ACCEPTED_BY_VENDOR':
+        return this.props.driverAcceptOrder(orderId);
+      case 'READY':
         return this.props.driverPickUpOrder(orderId);
+      default:
+        return;
     }
   }
 
   rejectPressIn() {
     this.setState({
-      pressBegin: Date.now(),
+      pressingCancelSince: Date.now(),
     });
   }
   rejectPressOut() {
-    console.log(Date.now(), this.state.pressBegin);
-    if (Date.now() > this.state.pressBegin + 3000) {
+    if (Date.now() > this.state.pressingCancelSince + 3000) {
       this.props.driverRejectOrder(this.props.order._id);
     }
+    this.setState({
+      pressingCancelSince: null,
+    });
   }
 
   render() {
@@ -86,8 +89,8 @@ export class Order extends Component {
         </Layout>
         <Layout style={styles.orderItemList} level="3">
           <ScrollView>
-            {[...order.orderItems, ...order.orderItems].map((orderItem) => (
-              <Layout level="4" style={styles.orderItem}>
+            {order.orderItems.map((orderItem) => (
+              <Layout key={orderItem._id} level="4" style={styles.orderItem}>
                 <Layout level="4" style={styles.orderItemInfo}>
                   <Text category="h5">{orderItem.menuItem.name}</Text>
                 </Layout>
@@ -96,7 +99,10 @@ export class Order extends Component {
                     key={modification._id}
                     level="5"
                     style={styles.modification}>
-                    <Text category="p1">{modification.name}: {modification.options.map((option) => option.name)}</Text>
+                    <Text category="p1">
+                      {modification.name}:{' '}
+                      {modification.options.map((option) => option.name)}
+                    </Text>
                   </Layout>
                 ))}
               </Layout>
@@ -116,14 +122,16 @@ export class Order extends Component {
 
 const OrderButtons = (props) => {
   switch (props.order.disposition) {
-    case 'ACCEPTED':
+    case 'ACCEPTED_BY_VENDOR':
       return (
         <View style={styles.buttonGroup}>
-          <Button style={styles.button} onPress={() => props.handleSubmit()}>
-            Pick Up
+          <Button
+            style={styles.buttonDouble}
+            onPress={() => props.handleSubmit()}>
+            Accept
           </Button>
           <Button
-            style={styles.button}
+            style={styles.buttonDouble}
             status="danger"
             accessoryLeft={CloseCircleIcon}
             onPressIn={() => props.rejectPressIn()}
@@ -132,16 +140,36 @@ const OrderButtons = (props) => {
           </Button>
         </View>
       );
-    case 'EN_ROUTE':
+    case 'ACCEPTED_BY_DRIVER':
       return (
-        <Button status="success" onPress={() => props.handleSubmit()}>
-          Deliver
+        <Button style={styles.buttonSingle} status="info">
+          Estimated ready time:{' '}
+          {moment(props.order.estimatedReadyTime).format('hh:mm A')}
         </Button>
       );
     case 'READY':
-      <Button style={styles.button} onPress={() => props.handleSubmit()}>
-        Pick Up
-      </Button>;
+      return (
+        <Button
+          style={styles.buttonSingle}
+          status="success"
+          onPress={() => props.handleSubmit()}>
+          Pick Up {props.order.orderItems.length} Items
+        </Button>
+      );
+    case 'EN_ROUTE':
+      const {estimatedDeliveryTime} = props.order;
+      return (
+        <Button
+          style={styles.buttonSingle}
+          status="success"
+          onPress={() => props.handleSubmit()}>
+          Deliver
+          {estimatedDeliveryTime
+            ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mm A')
+            : ''}
+        </Button>
+      );
+
     default:
       return null;
   }
@@ -151,8 +179,8 @@ const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: windowWidth * 0.05,
     padding: 10,
+    margin: windowWidth * 0.05,
     width: windowWidth * 0.9,
     borderRadius: 10,
   },
@@ -166,8 +194,8 @@ const styles = StyleSheet.create({
   customerTitle: {borderTopLeftRadius: 10, borderTopRightRadius: 10},
   orderItemList: {
     flex: 2,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    // borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
   },
   orderItem: {
     flexDirection: 'column',
@@ -198,9 +226,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  button: {
+  buttonDouble: {
     width: '40%',
     marginHorizontal: '5%',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+  buttonSingle: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
 });
 
@@ -210,6 +244,7 @@ const mapDispatchToProps = {
   driverPickUpOrder,
   driverDeliverOrder,
   driverRejectOrder,
+  driverAcceptOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order);

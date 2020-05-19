@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Layout, Button, Input} from '@ui-kitten/components';
 
-import {login} from '../actions/session';
-import {formStyles} from '../theme/styles';
+import {login} from '../../actions/session';
+import {formStyles} from '../../theme/styles';
 
 export class Login extends Component {
   state = {};

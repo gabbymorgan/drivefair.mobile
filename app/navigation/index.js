@@ -148,8 +148,8 @@ export const modalStack = {
     children: [
       {
         component: {
-          id: "toast",
-          name: 'com.myApp.Toast',
+          id: "modal",
+          name: 'com.myApp.Modal',
           options: {
             topBar: {
               visible: false,

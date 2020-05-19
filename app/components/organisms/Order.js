@@ -10,15 +10,15 @@ import {connect} from 'react-redux';
 import {Layout, Text, Button} from '@ui-kitten/components';
 import moment from 'moment';
 
-import {NavigateIcon, CloseCircleIcon} from '../theme/icons';
-import {navigateToAddress} from '../services/location';
+import {NavigateIcon, CloseCircleIcon} from '../../theme/icons';
+import {navigateToAddress} from '../../services/location';
 import {
   driverPickUpOrder,
   driverDeliverOrder,
   driverRejectOrder,
   driverAcceptOrder,
-} from '../actions/route';
-import {myTheme} from '../theme';
+} from '../../actions/route';
+import {myTheme} from '../../theme';
 
 export class Order extends Component {
   state = {
@@ -89,8 +89,8 @@ export class Order extends Component {
         </Layout>
         <Layout style={styles.orderItemList} level="3">
           <ScrollView>
-            {[...order.orderItems, ...order.orderItems].map((orderItem) => (
-              <Layout level="4" style={styles.orderItem}>
+            {order.orderItems.map((orderItem) => (
+              <Layout key={orderItem._id} level="4" style={styles.orderItem}>
                 <Layout level="4" style={styles.orderItemInfo}>
                   <Text category="h5">{orderItem.menuItem.name}</Text>
                 </Layout>
@@ -125,7 +125,9 @@ const OrderButtons = (props) => {
     case 'ACCEPTED_BY_VENDOR':
       return (
         <View style={styles.buttonGroup}>
-          <Button style={styles.buttonDouble} onPress={() => props.handleSubmit()}>
+          <Button
+            style={styles.buttonDouble}
+            onPress={() => props.handleSubmit()}>
             Accept
           </Button>
           <Button
@@ -151,7 +153,7 @@ const OrderButtons = (props) => {
           style={styles.buttonSingle}
           status="success"
           onPress={() => props.handleSubmit()}>
-          Pick Up
+          Pick Up {props.order.orderItems.length} Items
         </Button>
       );
     case 'EN_ROUTE':

@@ -17,14 +17,14 @@ import MessagesScreen from './app/screens/MessagesScreen';
 import {setBaseURL} from './app/services/http';
 import {myTheme} from './app/theme';
 import {loginRoot} from './app/navigation';
-import StatusToggle from './app/components/StatusToggle';
-import Toast from './app/components/Toast';
+import StatusToggle from './app/components/atoms/StatusToggle';
+import Modal from './app/components/molecules/OrderRequestModal';
 
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot(loginRoot);
 });
 
-setBaseURL('http://192.168.1.12:5000');
+setBaseURL("http://192.168.1.12:5000");
 
 const RootHOC = (Component) => (props) => (
   <React.Fragment>
@@ -53,4 +53,4 @@ Navigation.registerComponent('com.myApp.StatusToggle', () =>
   RootHOC(StatusToggle),
 );
 
-Navigation.registerComponent('com.myApp.Toast', () => RootHOC(Toast));
+Navigation.registerComponent('com.myApp.Modal', () => RootHOC(Modal));

@@ -12,8 +12,8 @@ import {
 } from '@ui-kitten/components';
 
 import {login, loginWithToken} from '../actions/session';
-import Login from '../components/Login';
-import Registration from '../components/Registration';
+import Login from '../components/organisms/Login';
+import Registration from '../components/organisms/Registration';
 import {mainRoot} from '../navigation';
 import {screenStyles} from '../theme/styles';
 

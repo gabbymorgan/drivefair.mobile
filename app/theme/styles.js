@@ -11,7 +11,8 @@ export const screenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20
+    paddingTop: 20,
+    paddingBottom: 10
   },
   title: {
     flex: 1,

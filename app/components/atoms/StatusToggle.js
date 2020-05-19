@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {Toggle, Text, Layout, Spinner} from '@ui-kitten/components';
 
-import {toggleStatus} from '../actions/route';
+import {toggleStatus} from '../../actions/route';
 
 class StatusToggle extends Component {
   onCheckedChange(isChecked) {

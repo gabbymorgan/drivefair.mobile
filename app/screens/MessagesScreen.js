@@ -9,19 +9,6 @@ import Axios from 'axios';
 export class MessagesScreen extends Component {
   componentDidMount = async () => {
     const settings = await messaging().requestPermission();
-    // begin modal debug
-    // this.props.receivePushNotification({
-    //   notification: {
-    //     title: 'Order Up!',
-    //     body:
-    //       'You have an incoming order from Mcdonalds. Want it? ',
-    //   }, data: {
-    //     orderId: "1",
-    //     messageType: "REQUEST_DRIVER",
-    //     openModal: "true"
-    //   }
-    // });
-    // end modal debug
     if (settings) {
       messaging().onMessage((message) => {
         this.props.receivePushNotification(message);

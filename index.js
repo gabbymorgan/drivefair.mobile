@@ -24,7 +24,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot(loginRoot);
 });
 
-setBaseURL('http://192.168.1.12:5000');
+setBaseURL('https://dentondelivery-dev.herokuapp.com');
 
 const RootHOC = (Component) => (props) => (
   <React.Fragment>

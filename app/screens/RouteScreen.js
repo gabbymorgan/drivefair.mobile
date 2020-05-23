@@ -14,17 +14,17 @@ import Order from '../components/organisms/Order';
 import {NavigateIcon} from '../theme/icons';
 import {navigateToAddress} from '../services/location';
 
-// let realTimeDataInterval;
+let realTimeDataInterval;
 const windowWidth = Dimensions.get('window').width;
 class RouteScreen extends Component {
   componentDidMount = async () => {
     this.getRealTimeData();
-    // realTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
+    realTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
   };
 
-  // componentWillUnmount() {
-  //   clearInterval(realTimeDataInterval);
-  // }
+  componentWillUnmount() {
+    clearInterval(realTimeDataInterval);
+  }
 
   getRealTimeData() {
     this.props.setLocation();
@@ -32,8 +32,6 @@ class RouteScreen extends Component {
   }
 
   render() {
-    const {businessName, address} = this.props.vendor;
-    const {street, unit, city, state, zip} = address ? address : {};
     if (this.props.isLoading && !this.props.orders.length) {
       return (
         <Layout style={screenStyles.container}>
@@ -48,6 +46,8 @@ class RouteScreen extends Component {
         </Layout>
       );
     }
+    const {vendor, address} = this.props.orders[0];
+    const {street, unit, city, state, zip} = address ? address : {};
     return (
       <Layout style={screenStyles.container}>
         <TouchableOpacity
@@ -55,7 +55,7 @@ class RouteScreen extends Component {
           onPress={() => navigateToAddress({street, unit, city, state, zip})}>
           <Layout style={styles.address}>
             <Text category="h5" style={styles.vendorInfoText}>
-              {businessName}
+              {vendor.businessName}
             </Text>
             <Text category="s2" style={styles.vendorInfoText}>
               {street} {unit ? '#' + unit : null}
@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
   vendorInfo: {
     flex: 1,
     flexDirection: 'row',
-    flexWrap: "nowrap",
-    alignItems: "center",
-    padding: 10
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    padding: 10,
   },
   vendorInfoText: {
     textAlign: 'center',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   navIcon: {
-    maxWidth: "10%"
+    maxWidth: '10%',
   },
   carousel: {
     display: 'flex',
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  vendor: state.route.vendor,
   orders: state.route.orders,
   isLoggedIn: state.session.isLoggedIn,
   isLoading: state.route.isLoading,

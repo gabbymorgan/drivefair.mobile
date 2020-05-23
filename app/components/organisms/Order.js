@@ -55,7 +55,7 @@ export class Order extends Component {
 
   render() {
     const {order} = this.props;
-    const {address, customer, notes, disposition} = order;
+    const {address, customer, notes} = order;
     const {firstName, lastName} = customer;
     const {street, unit, city, state, zip} = address ? address : {};
     return (
@@ -144,7 +144,7 @@ const OrderButtons = (props) => {
       return (
         <Button style={styles.buttonSingle} status="info">
           Estimated ready time:{' '}
-          {moment(props.order.estimatedReadyTime).format('hh:mm A')}
+          {moment(props.order.estimatedReadyTime).format('hh:mma')}
         </Button>
       );
     case 'READY':
@@ -165,7 +165,7 @@ const OrderButtons = (props) => {
           onPress={() => props.handleSubmit()}>
           Deliver
           {estimatedDeliveryTime
-            ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mm A')
+            ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mma')
             : ''}
         </Button>
       );

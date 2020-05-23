@@ -15,9 +15,13 @@ const asyncActions = [
   'REJECT_ORDER',
   'DELIVER_ORDER',
   'ACCEPT_ORDER',
-  'RECEIVE_PUSH_NOTIFICATION',
 ];
-const syncActions = ['LOG_OUT'];
+const syncActions = [
+  'LOG_OUT',
+  'RECEIVE_PUSH_NOTIFICATION',
+  'ORDER_READY',
+  'ORDER_CANCELED',
+];
 
 syncActions.forEach((key) => {
   actionsObj[key] = key;

@@ -13,8 +13,10 @@ export class MessagesScreen extends Component {
       messaging().onMessage((message) => {
         this.props.receivePushNotification(message);
       });
+      messaging().onNotificationOpenedApp((message) => {
+        this.props.receivePushNotification(message);
+      });
       const token = await messaging().getToken();
-      console.log(token);
       await Axios.post('/drivers/addDeviceToken', {
         deviceToken: token,
       });

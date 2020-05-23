@@ -63,3 +63,4 @@ buck-out/
 /ios/Pods/
 
 google-services.json
+keystore.properties

@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { StyleSheet, Animated} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {myTheme} from '../../theme';
 import {Button, Spinner} from '@ui-kitten/components';
 
@@ -35,35 +35,15 @@ export default function ProtectedButton(props) {
   return (
     <AnimatedButton
       style={[
-        styles.buttonDouble,
+        props.style,
         {
           opacity: cancelPressStartTime ? fadeAnim : 1,
         },
       ]}
-      status="danger"
+      status={props.status}
       onPressIn={() => beginCancelPress()}
       onPressOut={() => endCancelPress()}>
       {buttonContent}
     </AnimatedButton>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    color: 'white',
-    fontSize: 16,
-    marginLeft: 16,
-  },
-  button: {
-    marginRight: 16,
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  buttonDouble: {
-    width: '40%',
-    marginHorizontal: '5%',
-  },
-  buttonSingle: {},
-});

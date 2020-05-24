@@ -5,18 +5,26 @@ import {connect} from 'react-redux';
 import {screenStyles} from '../theme/styles';
 import {receivePushNotification} from '../actions/messages';
 import Axios from 'axios';
+import {Navigation} from 'react-native-navigation';
+import {modalStack} from '../navigation';
 
 export class MessagesScreen extends Component {
   componentDidMount = async () => {
-    const settings = await messaging().requestPermission();
-    if (settings) {
+    const messagingAllowed = await messaging().requestPermission();
+    if (messagingAllowed) {
       messaging().onMessage((message) => {
         this.props.receivePushNotification(message);
       });
-      messaging().onNotificationOpenedApp((message) => {
+      // messaging().onNotificationOpenedApp((message) => {
+      //   if (message.data.openModal) {
+      //     Navigation.showModal(modalStack);
+      //   }
+      // });
+      messaging().setBackgroundMessageHandler(async (message) => {
         this.props.receivePushNotification(message);
       });
       const token = await messaging().getToken();
+      console.log(token);
       await Axios.post('/drivers/addDeviceToken', {
         deviceToken: token,
       });

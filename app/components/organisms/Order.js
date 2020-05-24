@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Layout, Text, Button} from '@ui-kitten/components';
+import {Layout, Text, Button, Spinner} from '@ui-kitten/components';
 import moment from 'moment';
 
 import {NavigateIcon, CloseCircleIcon} from '../../theme/icons';
@@ -19,6 +19,7 @@ import {
   driverAcceptOrder,
 } from '../../actions/route';
 import {myTheme} from '../../theme';
+import ProtectedButton from '../atoms/ProtectedButton';
 
 export class Order extends Component {
   state = {
@@ -159,15 +160,19 @@ const OrderButtons = (props) => {
     case 'EN_ROUTE':
       const {estimatedDeliveryTime} = props.order;
       return (
-        <Button
+        <ProtectedButton
+          {...props}
           style={styles.buttonSingle}
           status="success"
-          onPress={() => props.handleSubmit()}>
-          Deliver
-          {estimatedDeliveryTime
-            ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mma')
-            : ''}
-        </Button>
+          initialContent={`Deliver ${
+            estimatedDeliveryTime
+              ? ' by: ' + moment(estimatedDeliveryTime).format('hh:mma')
+              : ''
+          }`}
+          pressProgressContent={<Spinner size="small" />}
+          pressCompletedContent="Good!"
+          action={props.handleSubmit}
+        />
       );
 
     default:

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android && react-native start",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -24,6 +24,7 @@
     "react-native": "0.62.2",
     "react-native-navigation": "^6.6.2",
     "react-native-open-maps": "^0.3.5",
+    "react-native-sound": "^0.11.0",
     "react-native-svg": "^12.1.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",

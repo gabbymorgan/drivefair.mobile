@@ -1,8 +1,8 @@
 import types from '../actions/types';
 
 const initialState = {
-  messages: [],
-  currentMessage: {},
+  // messages: [],
+  modalData: {},
 };
 
 export default (state = initialState, {type, payload}) => {
@@ -17,11 +17,16 @@ export default (state = initialState, {type, payload}) => {
       };
     case types.GET_MESSAGES_SUCCESS:
       return {...state, isLoading: false, ...payload};
-    case types.RECEIVE_PUSH_NOTIFICATION:
+    // case types.RECEIVE_PUSH_NOTIFICATION:
+    //   return {
+    //     ...state,
+    //     messages: [...state.messages, payload.message],
+    //   };
+    case types.SHOW_REQUEST_DRIVER_MODAL:
       return {
         ...state,
-        currentMessage: payload.message,
-        messages: [...state.messages, payload.message],
+        modalData: payload.message.data,
+        timeReceived: payload.timeReceived,
       };
     default:
       return state;

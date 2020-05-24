@@ -21,6 +21,7 @@ const syncActions = [
   'RECEIVE_PUSH_NOTIFICATION',
   'ORDER_READY',
   'ORDER_CANCELED',
+  'SHOW_REQUEST_DRIVER_MODAL',
 ];
 
 syncActions.forEach((key) => {

@@ -14,7 +14,7 @@ let notificationSound;
 class OrderRequestModal extends Component {
   componentDidMount() {
     notificationSound = new Sound(
-      'to_the_point.mp3',
+      'quite_impressed.mp3',
       Sound.MAIN_BUNDLE,
       (error) => {
         if (error) {
@@ -26,10 +26,10 @@ class OrderRequestModal extends Component {
         notificationSound.play();
       },
     );
-    if (Date.now() < this.props.timeReceived + 10000) {
+    if (Date.now() < this.props.timeReceived + 50000) {
       setTimeout(() => {
         this.dismissModal();
-      }, Date.now() - this.props.timeReceived + 10000);
+      }, Date.now() - this.props.timeReceived + 50000);
     } else {
       this.dismissModal();
     }

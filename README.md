@@ -1,5 +1,5 @@
 # drivefair.mobile
 Mobile app for delivery drivers.
 
-![DriveFair Example](https://i.imgur.com/evsFzuX.mp4)
+![DriveFair Example](https://imgur.com/L3yB33N)
 

@@ -72,7 +72,6 @@ export const driverRejectOrder = (orderId) => async (dispatch) => {
   }
 };
 
-
 export const driverAcceptOrder = (orderId) => async (dispatch) => {
   dispatch({type: types.ACCEPT_ORDER});
   try {
@@ -88,7 +87,6 @@ export const driverAcceptOrder = (orderId) => async (dispatch) => {
     dispatch({type: types.ACCEPT_ORDER_FAIL, payload: {error}});
   }
 };
-
 
 export const driverPickUpOrder = (orderId) => async (dispatch) => {
   dispatch({type: types.PICK_UP_ORDER});
@@ -119,5 +117,21 @@ export const driverDeliverOrder = (orderId) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({type: types.DELIVER_ORDER_FAIL, payload: {error}});
+  }
+};
+
+export const getOrderHistory = () => async (dispatch) => {
+  dispatch({type: types.GET_ORDER_HISTORY});
+  try {
+    const response = await axios.get('/orders/history');
+    if (!response.data || response.data.error) {
+      dispatch({type: types.GET_ORDER_HISTORY_FAIL, payload: response.data});
+    }
+    dispatch({
+      type: types.GET_ORDER_HISTORY_SUCCESS,
+      payload: {...response.data},
+    });
+  } catch (error) {
+    dispatch({type: types.GET_ORDER_HISTORY_FAIL, payload: {error}});
   }
 };

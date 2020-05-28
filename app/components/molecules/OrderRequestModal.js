@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
 const container = StyleSheet.compose(screenStyles.container, styles.container);
 
 const mapStateToProps = (state) => ({
-  modalData: state.messages.modalData,
-  timeReceived: state.messages.timeReceived,
+  modalData: state.notifications.modalData,
+  timeReceived: state.notifications.timeReceived,
 });
 
 const mapDispatchToProps = {

@@ -5,22 +5,13 @@ export const NavigateIcon = (props) => (
   <Icon {...props} name="compass" width={30} height={30} fill="white" />
 );
 export const CloseCircleIcon = (props) => (
-  <Icon
-    {...props}
-    name="close-circle"
-    width={20}
-    height={20}
-    fill="white"
-  />
+  <Icon {...props} name="close-circle" width={20} height={20} fill="white" />
 );
 export const DownArrow = (props) => (
-  <Icon
-    {...props}
-    name="arrow-downward"
-    width={50}
-    height={50}
-    fill="white"
-  />
+  <Icon {...props} name="arrow-downward" width={50} height={50} fill="white" />
+);
+export const RightArrow = (props) => (
+  <Icon {...props} name="more-horizontal" width={40} height={40} fill="white" />
 );
 export const DownRightArrow = (props) => (
   <Icon

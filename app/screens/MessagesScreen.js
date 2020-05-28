@@ -3,7 +3,7 @@ import {Layout} from '@ui-kitten/components';
 import messaging from '@react-native-firebase/messaging';
 import {connect} from 'react-redux';
 import {screenStyles} from '../theme/styles';
-import {receivePushNotification} from '../actions/messages';
+import {receivePushNotification} from '../actions/notifications';
 import Axios from 'axios';
 import {Navigation} from 'react-native-navigation';
 import {modalStack} from '../navigation';

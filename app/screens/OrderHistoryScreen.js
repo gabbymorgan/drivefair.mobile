@@ -13,11 +13,9 @@ export class OrderHistoryScreen extends Component {
   render() {
     return (
       <Layout style={[screenStyles.container, styles.container]} level="1">
-        {[...this.props.historicalOrders, ...this.props.historicalOrders].map(
-          (order, index) => (
-            <HistoricalOrder key={order._id} order={order} index={index} />
-          ),
-        )}
+        {this.props.historicalOrders.map((order, index) => (
+          <HistoricalOrder key={order._id} order={order} index={index} />
+        ))}
       </Layout>
     );
   }

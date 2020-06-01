@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {Navigation} from 'react-native-navigation';
@@ -8,18 +8,53 @@ import {screenStyles} from '../../theme/styles';
 import ProtectedButton from '../atoms/ProtectedButton';
 import {driverAcceptOrder} from '../../actions/route';
 import {DownArrow, DownRightArrow, RightDownArrow} from '../../theme/icons';
+import Sound from 'react-native-sound';
 
-const OrderRequestModal = function (props) {
-  dismissModal = () => {
-    Navigation.dismissModal(props.componentId);
-  };
-  return (
-    <Layout style={container}>
-      <NotificationText {...props} />
-      <ReplyButtons {...props} dismissModal={dismissModal.bind(this)} />
-    </Layout>
-  );
-};
+let notificationSound;
+class OrderRequestModal extends Component {
+  componentDidMount() {
+    notificationSound = new Sound(
+      'quite_impressed.mp3',
+      Sound.MAIN_BUNDLE,
+      (error) => {
+        if (error) {
+          console.log('failed to load the sound', error);
+          return;
+        }
+        notificationSound.setNumberOfLoops(-1);
+        notificationSound.setVolume(0.5);
+        notificationSound.play();
+      },
+    );
+    if (Date.now() < this.props.timeReceived + 50000) {
+      setTimeout(() => {
+        this.dismissModal();
+      }, Date.now() - this.props.timeReceived + 50000);
+    } else {
+      this.dismissModal();
+    }
+  }
+
+  componentWillUnmount() {
+    notificationSound.stop();
+  }
+
+  dismissModal() {
+    Navigation.dismissModal(this.props.componentId);
+  }
+
+  render() {
+    return (
+      <Layout style={container}>
+        <NotificationText {...this.props} />
+        <ReplyButtons
+          {...this.props}
+          dismissModal={this.dismissModal.bind(this)}
+        />
+      </Layout>
+    );
+  }
+}
 
 const NotificationText = (props) => {
   const {
@@ -28,7 +63,7 @@ const NotificationText = (props) => {
     businessAddress,
     customerName,
     customerAddress,
-  } = props.message.data;
+  } = props.modalData;
   switch (messageType) {
     case 'REQUEST_DRIVER':
       return (
@@ -63,7 +98,7 @@ const NotificationText = (props) => {
 };
 
 const ReplyButtons = (props) => {
-  const {messageType, orderId} = props.message.data;
+  const {messageType, orderId} = props.modalData;
   const acceptOrder = () => {
     props.driverAcceptOrder(orderId);
     props.dismissModal();
@@ -77,10 +112,12 @@ const ReplyButtons = (props) => {
           </Button>
           <ProtectedButton
             {...props}
+            style={styles.buttonDouble}
+            status={'danger'}
             initialContent="Nope"
             pressProgressContent={<Spinner size="small" />}
             pressCompletedContent="Good!"
-            action={dismissModal}
+            action={props.dismissModal}
           />
         </Layout>
       );
@@ -99,7 +136,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   infoGroup: {
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   infoText: {
     textAlign: 'center',
@@ -119,7 +156,8 @@ const styles = StyleSheet.create({
 const container = StyleSheet.compose(screenStyles.container, styles.container);
 
 const mapStateToProps = (state) => ({
-  message: state.messages.currentMessage,
+  modalData: state.notifications.modalData,
+  timeReceived: state.notifications.timeReceived,
 });
 
 const mapDispatchToProps = {

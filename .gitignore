@@ -65,3 +65,6 @@ buck-out/
 google-services.json
 keystore.properties
 *.der
+*.pepk
+*.jks
+*.pem
